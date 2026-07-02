@@ -46,16 +46,20 @@ function renderList(filter = "") {
       const pts = getPoints(c.rank);
 
       card.innerHTML = `
-        <a href="tower.html?rank=${c.rank}" style="text-decoration:none;color:inherit;width:100%;display:flex;justify-content:space-between;align-items:center;">
+        <a href="tower.html?rank=${c.rank}" 
+           style="text-decoration:none;color:inherit;width:100%;display:flex;justify-content:space-between;align-items:center;">
+
           <div class="left">
             <div class="rank">#${c.rank}</div>
             <div>
               <div class="name">${c.name}</div>
               <div class="victors">Victors: ${victors}</div>
+              <div class="points">+${pts} pts</div>
             </div>
           </div>
 
           <div class="diff">${c.difficulty ?? ""}</div>
+
         </a>
       `;
 
