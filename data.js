@@ -1,4 +1,4 @@
-const completions = [
+window.completions = [
   { rank: 1, victors: ["inter"], name: "Tower of Rezz Oant", difficulty: 12.05 },
   { rank: 2, victors: ["Zenythal"], name: "Tower of Reproachful Eyewall", difficulty: 11.66 },
   { rank: 3, victors: ["inter"], name: "Tower of Unpremeditated Paraphernalia", difficulty: 11.62 },
