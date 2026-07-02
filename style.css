@@ -1,26 +1,79 @@
 body {
-  background: #0f0f14;
-  color: white;
-  font-family: Arial;
   margin: 0;
-  padding: 20px;
+  background: #0b0d12;
+  color: #eaeaea;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
   text-align: center;
+  margin-top: 20px;
+  font-size: 28px;
+}
+
+.topbar {
+  text-align: center;
+  margin: 10px 0 20px;
+}
+
+a {
+  color: #8ab4ff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#list {
+  width: 85%;
+  margin: auto;
 }
 
 .card {
-  background: #1a1a24;
-  margin: 10px auto;
-  padding: 15px;
-  width: 80%;
+  background: #151826;
+  border: 1px solid #22263a;
   border-radius: 10px;
-}
-
-.row {
+  padding: 12px 16px;
+  margin: 10px 0;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #333;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.rank {
+  font-weight: bold;
+  width: 35px;
+  color: #ffd36e;
+}
+
+.name {
+  font-size: 16px;
+}
+
+.diff {
+  color: #9ad1ff;
+}
+
+.victors {
+  font-size: 13px;
+  color: #aaa;
+}
+
+#search {
+  display: block;
+  margin: 10px auto;
+  width: 60%;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background: #1a1f2e;
+  color: white;
 }
