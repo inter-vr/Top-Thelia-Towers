@@ -32,7 +32,7 @@ function getPoints(rank) {
 
 function renderList(filter = "") {
   const list = document.getElementById("list");
-  if (!list || !window.completions) return;
+  if (!list || !Array.isArray(window.completions)) return;
 
   list.innerHTML = "";
 
