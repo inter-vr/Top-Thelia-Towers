@@ -77,3 +77,9 @@ a:hover {
   background: #1a1f2e;
   color: white;
 }
+
+.points {
+  font-size: 13px;
+  color: #7CFF9A;
+  margin-top: 2px;
+}
