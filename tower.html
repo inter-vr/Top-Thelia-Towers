@@ -1,40 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Tower</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<h1 id="title">Loading...</h1>
-
-<div id="content" class="card"></div>
-
 <script src="data.js"></script>
 <script src="script.js"></script>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const rank = Number(params.get("rank"));
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const rank = Number(params.get("rank"));
 
-const tower = (window.completions || []).find(t => t.rank === rank);
+  const tower = (window.completions || []).find(t => t.rank === rank);
 
-const content = document.getElementById("content");
+  const title = document.getElementById("title");
+  const content = document.getElementById("content");
 
-if (!tower) {
-  document.getElementById("title").innerText = "Tower not found";
-  content.innerHTML = "Invalid tower ID.";
-} else {
-  document.getElementById("title").innerText = `#${tower.rank} ${tower.name}`;
+  if (!tower) {
+    title.innerText = "Tower not found";
+    content.innerHTML = "<p>Invalid tower ID.</p>";
+    return;
+  }
+
+  title.innerText = `#${tower.rank} ${tower.name}`;
 
   const victors = (tower.victors || []).join(", ");
+  const pts = (typeof getPoints === "function") ? getPoints(tower.rank) : 0;
 
   content.innerHTML = `
-    <div>
-      <p><b>Difficulty:</b> ${tower.difficulty}</p>
-      <p><b>Victors:</b> ${victors}</p>
-      <p><b>List Points:</b> ${(typeof getPoints === "function") ? getPoints(tower.rank) : "N/A"}</p>
-    </div>
+    <p><b>Difficulty:</b> ${tower.difficulty}</p>
+    <p><b>Victors:</b> ${victors}</p>
+    <p><b>List Points:</b> ${pts}</p>
   `;
 
   if (tower.video) {
@@ -48,8 +39,5 @@ if (!tower) {
       </div>
     `;
   }
-}
+});
 </script>
-
-</body>
-</html>
