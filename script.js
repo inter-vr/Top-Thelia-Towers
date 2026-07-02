@@ -57,11 +57,32 @@ function buildLeaderboard() {
 
     c.victors.forEach(p => {
       if (!players[p]) players[p] = { points: 0, count: 0 };
-
       players[p].points += pts;
       players[p].count += 1;
     });
   });
+
+  const sorted = Object.entries(players)
+    .sort((a, b) => b[1].points - a[1].points);
+
+  const container = document.getElementById("leaderboard");
+
+  sorted.forEach(([name, data], i) => {
+    const row = document.createElement("div");
+    row.className = "card";
+
+    row.innerHTML = `
+      <div class="left">
+        <div class="rank">#${i + 1}</div>
+        <div class="name">${name}</div>
+      </div>
+
+      <div class="diff">${data.points.toFixed(1)} pts (${data.count})</div>
+    `;
+
+    container.appendChild(row);
+  });
+}
 
   const sorted = Object.entries(players)
     .sort((a, b) => b[1].points - a[1].points);
