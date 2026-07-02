@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>List</title>
+  <title>Thelia List</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Completion List</h1>
+<h1>Thelia Family List</h1>
+
+<div class="topbar">
+  <a href="list.html">List</a>
+  <a href="leaderboard.html">Leaderboard</a>
+</div>
+
+<input id="search" placeholder="Search towers..." />
 
 <div id="list"></div>
 
@@ -14,7 +21,37 @@
 <script src="script.js"></script>
 
 <script>
+function renderList(filter = "") {
+  const container = document.getElementById("list");
+  container.innerHTML = "";
+
+  completions
+    .filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
+    .forEach(c => {
+      const div = document.createElement("div");
+      div.className = "card";
+
+      div.innerHTML = `
+        <div class="left">
+          <div class="rank">#${c.rank}</div>
+          <div>
+            <div class="name">${c.name}</div>
+            <div class="victors">Victors: ${c.victors.join(", ")}</div>
+          </div>
+        </div>
+
+        <div class="diff">${c.difficulty}</div>
+      `;
+
+      container.appendChild(div);
+    });
+}
+
 renderList();
+
+document.getElementById("search").addEventListener("input", (e) => {
+  renderList(e.target.value);
+});
 </script>
 
 </body>
