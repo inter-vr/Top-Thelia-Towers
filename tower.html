@@ -1,43 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tower</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 id="title">Loading...</h1>
+<div id="content" class="card"></div>
+
 <script src="data.js"></script>
-<script src="script.js"></script>
 
 <script>
+function getPoints(rank) {
+  const POINTS = {
+    1: 500,
+    2: 445,
+    3: 400,
+    4: 365,
+    5: 335,
+    6: 310,
+    7: 287.5,
+    8: 267.5,
+    9: 250,
+    10: 232.5,
+    11: 215,
+    12: 197.5,
+    13: 180,
+    14: 162.5,
+    15: 145,
+    16: 127.5,
+    17: 110,
+    18: 92.5,
+    19: 75,
+    20: 60,
+    21: 47.5,
+    22: 35,
+    23: 25,
+    24: 15,
+    25: 7.5
+  };
+
+  return POINTS[rank] || 0;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const rank = Number(params.get("rank"));
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const rank = Number(params.get("rank"));
 
-  const tower = (window.completions || []).find(t => t.rank === rank);
+    const tower = (window.completions || []).find(t => t.rank === rank);
 
-  const title = document.getElementById("title");
-  const content = document.getElementById("content");
+    const title = document.getElementById("title");
+    const content = document.getElementById("content");
 
-  if (!tower) {
-    title.innerText = "Tower not found";
-    content.innerHTML = "<p>Invalid tower ID.</p>";
-    return;
-  }
+    if (!tower) {
+      title.innerText = "Tower not found";
+      content.innerHTML = "<p>Invalid tower ID.</p>";
+      return;
+    }
 
-  title.innerText = `#${tower.rank} ${tower.name}`;
+    title.innerText = `#${tower.rank} ${tower.name}`;
 
-  const victors = (tower.victors || []).join(", ");
-  const pts = (typeof getPoints === "function") ? getPoints(tower.rank) : 0;
+    const victors = (tower.victors || []).join(", ");
+    const pts = getPoints(tower.rank);
 
-  content.innerHTML = `
-    <p><b>Difficulty:</b> ${tower.difficulty}</p>
-    <p><b>Victors:</b> ${victors}</p>
-    <p><b>List Points:</b> ${pts}</p>
-  `;
-
-  if (tower.video) {
-    content.innerHTML += `
-      <div style="margin-top:15px;">
-        <iframe width="100%" height="400"
-          src="${tower.video}"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>
-      </div>
+    content.innerHTML = `
+      <p><b>Difficulty:</b> ${tower.difficulty}</p>
+      <p><b>Victors:</b> ${victors}</p>
+      <p><b>List Points:</b> ${pts}</p>
     `;
+
+    if (tower.video) {
+      content.innerHTML += `
+        <div style="margin-top:15px;">
+          <iframe width="100%" height="400"
+            src="${tower.video}"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
+        </div>
+      `;
+    }
+
+  } catch (err) {
+    document.body.innerHTML = "<h1 style='color:red'>Error loading tower page</h1><pre>" + err + "</pre>";
+    console.error(err);
   }
 });
 </script>
+
+</body>
+</html>
