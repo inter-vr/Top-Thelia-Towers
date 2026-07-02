@@ -1,13 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thelia List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Thelia Family List</h1>
+
+<div class="topbar">
+  <a href="list.html">List</a>
+  <a href="leaderboard.html">Leaderboard</a>
+</div>
+
+<input id="search" placeholder="Search towers..." />
+
+<div id="list"></div>
+
+<!-- LOAD DATA FIRST -->
+<script src="data.js"></script>
+
+<!-- THEN LOAD LOGIC -->
+<script src="script.js"></script>
+
+<!-- SAFE EXECUTION WRAPPER -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  renderList();
+  try {
+    if (typeof renderList !== "function") {
+      throw new Error("renderList() not found — script.js failed to load or crashed.");
+    }
 
-  const search = document.getElementById("search");
+    renderList();
 
-  if (search) {
-    search.addEventListener("input", (e) => {
-      renderList(e.target.value);
-    });
+    const search = document.getElementById("search");
+
+    if (search) {
+      search.addEventListener("input", (e) => {
+        renderList(e.target.value);
+      });
+    }
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("list").innerHTML =
+      "<div style='color:red;text-align:center;'>Error loading list. Check console.</div>";
   }
 });
 </script>
+
+</body>
+</html>
