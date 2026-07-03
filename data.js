@@ -24,4 +24,20 @@ window.completions = [
   { rank: 23, victors: ["inter"], name: "Tower of Confusingly Curved Pole", difficulty: 9.05 },
   { rank: 24, victors: ["Zenythal","H1nored","Scourge"], name: "Tower of Astral Eclipse", difficulty: 8.93 },
   { rank: 25, victors: ["Zenythal","Blvkef"], name: "Tower of Hollow Reformations", difficulty: 8.67 },
+
+  { rank: 26, victors: ["Zenythal"], name: "Tower of Enraging Advancement", difficulty: 8.63 },
+  { rank: 27, victors: ["Zenythal","inter","Blvkef"], name: "Tower of Inevitable Failure", difficulty: 8.45 },
+  { rank: 28, victors: ["Blvkef","Zenythal","inter","H1nored"], name: "Tower of Thinning Layers", difficulty: 8.4 },
+  { rank: 29, victors: ["Scourge"], name: "Tower of Flattened Uprise", difficulty: 8.35 },
+  { rank: 30, victors: ["Blvkef","Zenythal","inter"], name: "Tower of Unsettling Heights", difficulty: 8.22 },
+  { rank: 31, victors: ["Zenythal"], name: "Tower of Bent Trauma", difficulty: 8.18 },
+  { rank: 32, victors: ["Blvkef","Zenythal"], name: "Tower of High Adrenaline", difficulty: 8.13 },
+  { rank: 33, victors: ["Blvkef","Zenythal","inter"], name: "Thanos Tower", difficulty: 8.13 },
+  { rank: 34, victors: ["Blvkef","Zenythal","inter","Jruriarte2019"], name: "Tower of Vacant Hindrances: Super Nerf", difficulty: 8.1 },
+  { rank: 35, victors: ["inter"], name: "Steeple of 35 Lodges of Hell", difficulty: 8.07 },
+  { rank: 36, victors: ["Zenythal"], name: "Tower of Harsh Aesthetical Obstacles", difficulty: 8.02 },
+  { rank: 37, victors: ["Blvkef","Zenythal","inter","H1nored"], name: "Tower of Difficulty Chart", difficulty: 8.02 },
+  { rank: 38, victors: ["inter","Blvkef","Zenythal"], name: "Tower of 40 Jumps of Hell", difficulty: 8.01 },
+  { rank: 39, victors: ["Zenythal","inter","Blvkef"], name: "Tower of Double Trouble", difficulty: 8.00 },
+  { rank: 40, victors: ["Zenythal"], name: "Steeple of Esoteric Arcane", difficulty: 8.00 }
 ];
