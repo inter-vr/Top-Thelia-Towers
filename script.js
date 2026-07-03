@@ -1,5 +1,3 @@
-window.completions = window.completions || [];
-
 window.POINTS = {
   1: 500, 2: 455, 3: 415, 4: 380, 5: 350,
   6: 325, 7: 305, 8: 285, 9: 270, 10: 255,
@@ -12,24 +10,32 @@ window.POINTS = {
 };
 
 function getPoints(rank) {
-  const r = Number(rank);
-  return window.POINTS[r] ?? 0;
+  return window.POINTS[Number(rank)] || 0;
 }
 
 function buildLeaderboard() {
   const board = document.getElementById("leaderboard");
   if (!board) return;
 
-  const players = {};
+  const players = Object.create(null);
 
   for (const c of window.completions) {
     const pts = getPoints(c.rank);
 
-    for (const p of (c.victors || [])) {
-      if (!players[p]) players[p] = { points: 0, count: 0 };
+    for (const name of (c.victors || [])) {
+      if (!players[name]) {
+        players[name] = { points: 0, count: 0, breakdown: [] };
+      }
 
-      players[p].points += pts;
-      players[p].count++;
+      players[name].points += pts;
+      players[name].count++;
+
+      // store breakdown so you can debug later
+      players[name].breakdown.push({
+        tower: c.name,
+        rank: c.rank,
+        points: pts
+      });
     }
   }
 
@@ -39,16 +45,16 @@ function buildLeaderboard() {
   board.innerHTML = "";
 
   for (const [name, data] of sorted) {
-    const row = document.createElement("div");
-    row.className = "card";
+    const el = document.createElement("div");
+    el.className = "card";
 
-    row.innerHTML = `
+    el.innerHTML = `
       <div class="left">
         <div class="name">${name}</div>
       </div>
-      <div class="diff">${data.points.toFixed(1)} pts (${data.count})</div>
+      <div class="diff">${data.points} pts (${data.count})</div>
     `;
 
-    board.appendChild(row);
+    board.appendChild(el);
   }
 }
