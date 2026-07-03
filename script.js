@@ -1,81 +1,80 @@
-function getPoints(rank) {
-  const POINTS = {
-    1: 500, 2: 455, 3: 415, 4: 380, 5: 350,
-    6: 325, 7: 305, 8: 285, 9: 270, 10: 255,
-    11: 240, 12: 225, 13: 212, 14: 200, 15: 188,
-    16: 176, 17: 165, 18: 154, 19: 144, 20: 134,
-    21: 124, 22: 114, 23: 104, 24: 95, 25: 86,
-    26: 78, 27: 70, 28: 62, 29: 55, 30: 48,
-    31: 42, 32: 36, 33: 30, 34: 25, 35: 20,
-    36: 17, 37: 15, 38: 13, 39: 11, 40: 10
-  };
+let playerData = {};
 
-  return POINTS[Number(rank)] ?? 0;
+// Load data (if you use localStorage)
+function loadData() {
+  const saved = localStorage.getItem("playerData");
+  if (saved) playerData = JSON.parse(saved);
 }
 
-function renderList(filter = "") {
-  const list = document.getElementById("list");
-  if (!list) return;
-
-  list.innerHTML = "";
-
-  window.completions
-    .filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
-    .forEach(c => {
-      const pts = getPoints(c.rank);
-
-      const div = document.createElement("div");
-      div.className = "card";
-
-      div.innerHTML = `
-        <a href="tower.html?rank=${c.rank}" style="color:inherit;text-decoration:none;width:100%;display:flex;justify-content:space-between;">
-          <div class="left">
-            <div class="rank">#${c.rank}</div>
-            <div>
-              <div class="name">${c.name}</div>
-              <div class="victors">${(c.victors || []).join(", ")}</div>
-              <div class="points">+${pts} pts</div>
-            </div>
-          </div>
-          <div class="diff">${c.difficulty}</div>
-        </a>
-      `;
-
-      list.appendChild(div);
-    });
+// Save data
+function saveData() {
+  localStorage.setItem("playerData", JSON.stringify(playerData));
 }
 
-function buildLeaderboard() {
-  const board = document.getElementById("leaderboard");
-  if (!board) return;
+// Render leaderboard
+function renderLeaderboard() {
+  const lb = document.getElementById("leaderboard");
+  lb.innerHTML = "";
 
-  const players = {};
-
-  for (const c of window.completions) {
-    const pts = getPoints(c.rank);
-
-    for (const p of (c.victors || [])) {
-      if (!players[p]) players[p] = { points: 0, count: 0 };
-      players[p].points += pts;
-      players[p].count++;
-    }
-  }
-
-  board.innerHTML = "";
-
-  Object.entries(players)
+  Object.entries(playerData)
     .sort((a, b) => b[1].points - a[1].points)
     .forEach(([name, data]) => {
-      const row = document.createElement("div");
-      row.className = "card";
+      const div = document.createElement("div");
+      div.className = "lb-row";
+      div.dataset.player = name;
 
-      row.innerHTML = `
-        <div class="left">
-          <div class="name">${name}</div>
-        </div>
-        <div class="diff">${data.points} pts (${data.count})</div>
+      div.innerHTML = `
+        <span class="lb-name">${name}</span>
+        <span class="lb-points">${data.points}</span>
       `;
 
-      board.appendChild(row);
+      lb.appendChild(div);
     });
 }
+
+// Click handler (IMPORTANT: always works even after rerender)
+document.addEventListener("click", (e) => {
+  const row = e.target.closest(".lb-row");
+  if (!row) return;
+
+  const name = row.dataset.player;
+  showPlayer(name);
+});
+
+// Simple popup
+function showPlayer(name) {
+  const data = playerData[name];
+  if (!data) return;
+
+  let text = `${name}\n\nTotal Points: ${data.points}\n\nCompletions:\n`;
+
+  if (!data.completions || data.completions.length === 0) {
+    text += "None";
+  } else {
+    data.completions.forEach(c => {
+      text += `- ${c.name} (+${c.points})\n`;
+    });
+  }
+
+  alert(text);
+}
+
+// Example: add completion
+function addCompletion(player, towerName, points) {
+  if (!playerData[player]) {
+    playerData[player] = { points: 0, completions: [] };
+  }
+
+  playerData[player].points += points;
+  playerData[player].completions.push({
+    name: towerName,
+    points: points
+  });
+
+  saveData();
+  renderLeaderboard();
+}
+
+// init
+loadData();
+renderLeaderboard();
