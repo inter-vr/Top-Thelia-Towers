@@ -134,4 +134,3 @@ document.addEventListener("click", (e) => {
     document.getElementById("playerPanel").classList.add("hidden");
   }
 });
-});
