@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Player Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 id="title">Loading player...</h1>
+
+<div id="summary" class="card"></div>
+
+<div id="completions"></div>
+
+<!-- LOAD DATA + LOGIC -->
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name");
+
+  const title = document.getElementById("title");
+  const summary = document.getElementById("summary");
+  const container = document.getElementById("completions");
+
+  if (!name || !Array.isArray(window.completions)) {
+    title.innerText = "Player not found";
+    return;
+  }
+
+  const POINTS = {
+    1: 500, 2: 445, 3: 400, 4: 365, 5: 335,
+    6: 310, 7: 287.5, 8: 267.5, 9: 250, 10: 232.5,
+    11: 215, 12: 197.5, 13: 180, 14: 162.5, 15: 145,
+    16: 127.5, 17: 110, 18: 92.5, 19: 75, 20: 60,
+    21: 47.5, 22: 35, 23: 25, 24: 15, 25: 7.5
+  };
+
+  function getPoints(rank) {
+    return POINTS[rank] || 0;
+  }
+
+  const playerCompletions = window.completions.filter(c =>
+    (c.victors || []).includes(name)
+  );
+
+  let totalPoints = 0;
+
+  playerCompletions.forEach(c => {
+    totalPoints += getPoints(c.rank);
+  });
+
+  title.innerText = name;
+
+  summary.innerHTML = `
+    <div>
+      <p><b>Total Points:</b> ${totalPoints.toFixed(1)}</p>
+      <p><b>Total Completions:</b> ${playerCompletions.length}</p>
+    </div>
+  `;
+
+  container.innerHTML = "";
+
+  playerCompletions
+    .sort((a, b) => a.rank - b.rank)
+    .forEach(c => {
+      const pts = getPoints(c.rank);
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <a href="tower.html?rank=${c.rank}" 
+           style="text-decoration:none;color:inherit;width:100%;display:flex;justify-content:space-between;align-items:center;">
+
+          <div class="left">
+            <div class="rank">#${c.rank}</div>
+            <div>
+              <div class="name">${c.name}</div>
+              <div class="victors">Difficulty: ${c.difficulty}</div>
+              <div class="points">+${pts} pts</div>
+            </div>
+          </div>
+
+        </a>
+      `;
+
+      container.appendChild(card);
+    });
+
+  if (playerCompletions.length === 0) {
+    container.innerHTML = "<div class='card'>No completions found.</div>";
+  }
+});
+</script>
+
+</body>
+</html>
