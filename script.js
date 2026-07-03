@@ -1,4 +1,4 @@
-const POINTS = {
+window.POINTS = {
   1: 500, 2: 455, 3: 415, 4: 380, 5: 350,
   6: 325, 7: 305, 8: 285, 9: 270, 10: 255,
   11: 240, 12: 225, 13: 212, 14: 200, 15: 188,
@@ -9,9 +9,9 @@ const POINTS = {
   36: 17, 37: 15, 38: 13, 39: 11, 40: 10
 };
 
-function getPoints(rank) {
-  return POINTS[rank] ?? 0;
-}
+window.getPoints = function(rank) {
+  return window.POINTS[rank] ?? 0;
+};
 
 function renderList(filter = "") {
   const list = document.getElementById("list");
