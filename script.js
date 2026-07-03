@@ -129,6 +129,9 @@ function openPlayerPanel(name, data) {
   }
 }
 
-document.getElementById("closePanel").addEventListener("click", () => {
-  document.getElementById("playerPanel").classList.add("hidden");
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "closePanel") {
+    document.getElementById("playerPanel").classList.add("hidden");
+  }
+});
 });
