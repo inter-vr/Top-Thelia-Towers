@@ -64,7 +64,7 @@ a:hover {
   transition: 0.15s ease;
 }
 
-/* CLEAN HOVER (NO FLIPPING) */
+/* CLEAN HOVER */
 .card:hover {
   background: #191d2e;
   border-color: #3a4666;
@@ -132,4 +132,88 @@ a:hover {
   #search {
     width: 90%;
   }
+}
+
+/* ========================= */
+/* 🔥 PLAYER POPUP PANEL UI */
+/* ========================= */
+
+.panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none;
+}
+
+.panel-box {
+  width: 360px;
+  max-height: 520px;
+  background: #151826;
+  border: 1px solid #2a2f45;
+  border-radius: 12px;
+  padding: 15px;
+  color: #eaeaea;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* TOP OF PANEL */
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+#panelName {
+  font-size: 18px;
+}
+
+#panelPoints {
+  font-size: 14px;
+  color: #7CFF9A;
+}
+
+/* SCROLLABLE LIST */
+#panelList {
+  overflow-y: auto;
+  max-height: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* EACH COMPLETION ENTRY */
+.panel-item {
+  background: #1b1f30;
+  padding: 7px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid #22263a;
+}
+
+/* CLOSE BUTTON */
+#closePanel {
+  margin-top: auto;
+  padding: 8px;
+  border: none;
+  background: #2b2f44;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+#closePanel:hover {
+  background: #3a4060;
 }
