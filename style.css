@@ -1,85 +1,55 @@
-body {
-  margin: 0;
-  background: #0b0d12;
-  color: #eaeaea;
-  font-family: Arial, sans-serif;
-}
-
-h1 {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 28px;
-}
-
-.topbar {
-  text-align: center;
-  margin: 10px 0 20px;
-}
-
-a {
-  color: #8ab4ff;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-#list {
-  width: 85%;
-  margin: auto;
-}
-
-.card {
-  background: #151826;
-  border: 1px solid #22263a;
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.left {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.rank {
-  font-weight: bold;
-  width: 35px;
-  color: #ffd36e;
-}
-
-.name {
-  font-size: 16px;
-}
-
-.diff {
-  color: #9ad1ff;
-}
-
-.victors {
-  font-size: 13px;
-  color: #aaa;
-}
-
-#search {
-  display: block;
-  margin: 10px auto;
-  width: 60%;
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
-  background: #1a1f2e;
-  color: white;
-}
 
 .points {
   font-size: 13px;
   color: #7CFF9A;
   margin-top: 2px;
+}
+
+/* PLAYER PAGE */
+#summary {
+  width: 85%;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+/* make leaderboard rows feel clickable */
+#leaderboard .card {
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+#leaderboard .card:hover {
+  transform: scale(1.01);
+  border-color: #3a4a7a;
+}
+
+/* improve tower list spacing inside player page */
+#completions {
+  width: 85%;
+  margin: auto;
+}
+
+/* make links feel consistent inside cards */
+.card a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* subtle hover for all cards */
+.card:hover {
+  border-color: #2f3550;
+  background: #171b2b;
+}
+
+/* better mobile scaling */
+@media (max-width: 700px) {
+  #list, #leaderboard, #completions, #summary {
+    width: 95%;
+  }
+
+  #search {
+    width: 90%;
+  }
 }
