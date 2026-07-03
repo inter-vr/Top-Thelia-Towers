@@ -4,6 +4,7 @@
   <title>Leaderboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <h1>Leaderboard</h1>
@@ -15,21 +16,26 @@
 
 <div id="leaderboard"></div>
 
-<!-- LOAD DATA -->
+<!-- IMPORTANT: load data first -->
 <script src="data.js"></script>
-
-<!-- LOAD LOGIC -->
 <script src="script.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  if (typeof buildLeaderboard === "function") {
-    buildLeaderboard();
-  } else {
-    console.error("buildLeaderboard is missing (script.js failed to load)");
+  // safety check (prevents blank page bugs)
+  if (!window.completions || !Array.isArray(window.completions)) {
     document.getElementById("leaderboard").innerHTML =
-      "<div style='color:red;text-align:center;'>Error loading leaderboard</div>";
+      "<div class='card'>Error: completions data failed to load.</div>";
+    return;
   }
+
+  if (typeof buildLeaderboard !== "function") {
+    document.getElementById("leaderboard").innerHTML =
+      "<div class='card'>Error: leaderboard function missing.</div>";
+    return;
+  }
+
+  buildLeaderboard();
 });
 </script>
 
