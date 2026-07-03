@@ -10,7 +10,6 @@ window.POINTS = {
 };
 
 window.getPoints = function(rank) {
-  const r = Number(rank);
   return window.POINTS[r] ?? 0;
 };
 
