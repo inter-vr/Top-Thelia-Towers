@@ -51,7 +51,6 @@ function buildLeaderboard() {
 
   const players = {};
 
-  // build player stats + breakdown
   for (const c of window.completions) {
     const pts = getPoints(c.rank);
 
@@ -82,8 +81,6 @@ function buildLeaderboard() {
     .forEach(([name, data]) => {
       const row = document.createElement("div");
       row.className = "card";
-
-      // IMPORTANT: needed for clicking
       row.setAttribute("data-player", name);
 
       row.innerHTML = `
@@ -96,29 +93,42 @@ function buildLeaderboard() {
       board.appendChild(row);
     });
 
-  // cache for click lookup
   window._leaderboardCache = players;
 }
 
-// CLICK SYSTEM (leaderboard player details)
+/* CLICK HANDLER */
 document.addEventListener("click", (e) => {
   const row = e.target.closest(".card[data-player]");
   if (!row) return;
 
   const name = row.getAttribute("data-player");
   const data = window._leaderboardCache?.[name];
-
   if (!data) return;
 
-  let text = `${name}\n\nTotal Points: ${data.points}\n\nCompletions:\n\n`;
+  openPlayerPanel(name, data);
+});
 
-  if (!data.breakdown.length) {
-    text += "None";
-  } else {
-    for (const c of data.breakdown) {
-      text += `#${c.rank} ${c.name} (+${c.points})\n`;
-    }
+function openPlayerPanel(name, data) {
+  const panel = document.getElementById("playerPanel");
+  const title = document.getElementById("panelName");
+  const points = document.getElementById("panelPoints");
+  const list = document.getElementById("panelList");
+
+  panel.classList.remove("hidden");
+
+  title.textContent = name;
+  points.textContent = `${data.points} pts`;
+
+  list.innerHTML = "";
+
+  for (const c of data.breakdown) {
+    const div = document.createElement("div");
+    div.className = "panel-item";
+    div.textContent = `#${c.rank} ${c.name} (+${c.points})`;
+    list.appendChild(div);
   }
+}
 
-  alert(text);
+document.getElementById("closePanel").addEventListener("click", () => {
+  document.getElementById("playerPanel").classList.add("hidden");
 });
