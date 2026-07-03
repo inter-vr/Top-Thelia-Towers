@@ -10,7 +10,8 @@ window.POINTS = {
 };
 
 window.getPoints = function(rank) {
-  return window.POINTS[rank] ?? 0;
+  const r = Number(rank);
+  return window.POINTS[r] ?? 0;
 };
 
 function renderList(filter = "") {
