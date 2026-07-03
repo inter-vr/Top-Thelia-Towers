@@ -30,6 +30,7 @@ function getPoints(rank) {
   return POINTS[rank] || 0;
 }
 
+/* ---------------- LIST ---------------- */
 function renderList(filter = "") {
   const list = document.getElementById("list");
   if (!list || !Array.isArray(window.completions)) return;
@@ -67,9 +68,10 @@ function renderList(filter = "") {
     });
 }
 
+/* ---------------- LEADERBOARD ---------------- */
 function buildLeaderboard() {
   const board = document.getElementById("leaderboard");
-  if (!board || !window.completions) return;
+  if (!board || !Array.isArray(window.completions)) return;
 
   const players = {};
 
@@ -78,11 +80,18 @@ function buildLeaderboard() {
 
     (c.victors || []).forEach(p => {
       if (!players[p]) {
-        players[p] = { points: 0, count: 0 };
+        players[p] = { points: 0, count: 0, completions: [] };
       }
 
       players[p].points += pts;
       players[p].count += 1;
+
+      players[p].completions.push({
+        name: c.name,
+        rank: c.rank,
+        difficulty: c.difficulty,
+        points: pts
+      });
     });
   });
 
@@ -94,6 +103,12 @@ function buildLeaderboard() {
   sorted.forEach(([name, data], i) => {
     const row = document.createElement("div");
     row.className = "card";
+
+    row.style.cursor = "pointer";
+
+    row.onclick = () => {
+      window.location.href = `player.html?name=${encodeURIComponent(name)}`;
+    };
 
     row.innerHTML = `
       <div class="left">
