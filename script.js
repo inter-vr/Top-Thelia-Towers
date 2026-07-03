@@ -54,12 +54,13 @@ function getPoints(rank) {
 
 function renderList(filter = "") {
   const list = document.getElementById("list");
-  if (!list || !window.completions) return;
+  if (!list || !Array.isArray(window.completions)) return;
 
   list.innerHTML = "";
 
   window.completions
     .filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
+    .sort((a, b) => a.rank - b.rank)
     .forEach(c => {
       const pts = getPoints(c.rank);
 
@@ -76,6 +77,7 @@ function renderList(filter = "") {
               <div class="points">+${pts} pts</div>
             </div>
           </div>
+
           <div class="diff">${c.difficulty}</div>
         </a>
       `;
